@@ -10,6 +10,9 @@ endif()
 if(POLICY CMP0074)
     cmake_policy(SET CMP0074 OLD)
 endif()
+if(POLICY CMP0072)
+    cmake_policy(SET CMP0072 NEW)
+endif()
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
@@ -73,7 +76,7 @@ endif()
 find_package(Threads REQUIRED)
 
 # Eigen
-find_package(Eigen3 3.3 REQUIRED)
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 
 # yaml-cpp
 find_package(yaml-cpp REQUIRED)

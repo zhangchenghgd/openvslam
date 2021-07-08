@@ -113,6 +113,8 @@ message(STATUS "BoW framework: ${BOW_FRAMEWORK} (found in ${BoW_INCLUDE_DIR})")
 
 # ----- Configure OpenVSLAM library -----
 
+set(OPENVSLAM_INCLUDE_INSTALL_DIR ${INCLUDES_DESTINATION}/openvslam)
+
 # Include directories
 target_include_directories(${PROJECT_NAME}
                            PUBLIC
@@ -120,8 +122,8 @@ target_include_directories(${PROJECT_NAME}
                            $<BUILD_INTERFACE:${spdlog_INCLUDE_DIR}>
                            $<BUILD_INTERFACE:${BoW_INCLUDE_DIR}>
                            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/>
-                           $<INSTALL_INTERFACE:include/openvslam/3rd/json/include>
-                           $<INSTALL_INTERFACE:include/openvslam/3rd/spdlog/include>
+                           $<INSTALL_INTERFACE:${OPENVSLAM_INCLUDE_INSTALL_DIR}/3rd/json/include>
+                           $<INSTALL_INTERFACE:${OPENVSLAM_INCLUDE_INSTALL_DIR}/3rd/spdlog/include>
                            $<INSTALL_INTERFACE:${BoW_INCLUDE_DIR}>
                            $<INSTALL_INTERFACE:include/>)
 
@@ -149,8 +151,6 @@ target_link_libraries(${PROJECT_NAME}
                       ${LAPACK_LIBRARIES})
 
 # ----- Install configuration -----
-
-set(OPENVSLAM_INCLUDE_INSTALL_DIR ${INCLUDES_DESTINATION}/openvslam)
 
 # Install OpenVSLAM library
 install(TARGETS ${PROJECT_NAME}
