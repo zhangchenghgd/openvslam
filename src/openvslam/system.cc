@@ -7,6 +7,7 @@
 #include "openvslam/data/camera_database.h"
 #include "openvslam/data/map_database.h"
 #include "openvslam/data/bow_database.h"
+#include "openvslam/data/bow_vocabulary.h"
 #include "openvslam/io/trajectory_io.h"
 #include "openvslam/io/map_database_io.h"
 #include "openvslam/publish/map_publisher.h"
@@ -22,23 +23,28 @@ system::system(const std::shared_ptr<config>& cfg, const std::string& vocab_file
     : cfg_(cfg), camera_(cfg->camera_) {
     spdlog::debug("CONSTRUCT: system");
 
-    std::cout << R"(  ___               __   _____ _      _   __  __ )" << std::endl;
-    std::cout << R"( / _ \ _ __  ___ _ _\ \ / / __| |    /_\ |  \/  |)" << std::endl;
-    std::cout << R"(| (_) | '_ \/ -_) ' \\ V /\__ \ |__ / _ \| |\/| |)" << std::endl;
-    std::cout << R"( \___/| .__/\___|_||_|\_/ |___/____/_/ \_\_|  |_|)" << std::endl;
-    std::cout << R"(      |_|                                        )" << std::endl;
-    std::cout << std::endl;
-    std::cout << "Copyright (C) 2019," << std::endl;
-    std::cout << "National Institute of Advanced Industrial Science and Technology (AIST)" << std::endl;
-    std::cout << "All rights reserved." << std::endl;
-    std::cout << std::endl;
-    std::cout << "This is free software," << std::endl;
-    std::cout << "and you are welcome to redistribute it under certain conditions." << std::endl;
-    std::cout << "See the LICENSE file." << std::endl;
-    std::cout << std::endl;
+    std::ostringstream message_stream;
+
+    message_stream << std::endl;
+    message_stream << R"(  ___               __   _____ _      _   __  __ )" << std::endl;
+    message_stream << R"( / _ \ _ __  ___ _ _\ \ / / __| |    /_\ |  \/  |)" << std::endl;
+    message_stream << R"(| (_) | '_ \/ -_) ' \\ V /\__ \ |__ / _ \| |\/| |)" << std::endl;
+    message_stream << R"( \___/| .__/\___|_||_|\_/ |___/____/_/ \_\_|  |_|)" << std::endl;
+    message_stream << R"(      |_|                                        )" << std::endl;
+    message_stream << std::endl;
+    message_stream << "Copyright (C) 2019," << std::endl;
+    message_stream << "National Institute of Advanced Industrial Science and Technology (AIST)" << std::endl;
+    message_stream << "All rights reserved." << std::endl;
+    message_stream << std::endl;
+    message_stream << "This is free software," << std::endl;
+    message_stream << "and you are welcome to redistribute it under certain conditions." << std::endl;
+    message_stream << "See the LICENSE file." << std::endl;
+    message_stream << std::endl;
 
     // show configuration
-    std::cout << *cfg_ << std::endl;
+    message_stream << *cfg_ << std::endl;
+
+    spdlog::info(message_stream.str());
 
     // load ORB vocabulary
     spdlog::info("loading ORB vocabulary: {}", vocab_file_path);
@@ -47,7 +53,7 @@ system::system(const std::shared_ptr<config>& cfg, const std::string& vocab_file
     try {
         bow_vocab_->loadFromBinaryFile(vocab_file_path);
     }
-    catch (const std::exception& e) {
+    catch (const std::exception&) {
         spdlog::critical("wrong path to vocabulary");
         delete bow_vocab_;
         bow_vocab_ = nullptr;
@@ -76,9 +82,9 @@ system::system(const std::shared_ptr<config>& cfg, const std::string& vocab_file
     // tracking module
     tracker_ = new tracking_module(cfg_, this, map_db_, bow_vocab_, bow_db_);
     // mapping module
-    mapper_ = new mapping_module(map_db_, camera_->setup_type_ == camera::setup_type_t::Monocular);
+    mapper_ = new mapping_module(cfg_->yaml_node_["Mapping"], map_db_);
     // global optimization module
-    global_optimizer_ = new global_optimization_module(map_db_, bow_db_, bow_vocab_, camera_->setup_type_ != camera::setup_type_t::Monocular);
+    global_optimizer_ = new global_optimization_module(map_db_, bow_db_, bow_vocab_, cfg_->yaml_node_, camera_->setup_type_ != camera::setup_type_t::Monocular);
 
     // connect modules each other
     tracker_->set_mapping_module(mapper_);
@@ -238,49 +244,64 @@ void system::abort_loop_BA() {
     global_optimizer_->abort_loop_BA();
 }
 
-Mat44_t system::feed_monocular_frame(const cv::Mat& img, const double timestamp, const cv::Mat& mask) {
+std::shared_ptr<Mat44_t> system::feed_monocular_frame(const cv::Mat& img, const double timestamp, const cv::Mat& mask) {
     assert(camera_->setup_type_ == camera::setup_type_t::Monocular);
 
     check_reset_request();
 
-    const Mat44_t cam_pose_cw = tracker_->track_monocular_image(img, timestamp, mask);
+    const auto cam_pose_wc = tracker_->track_monocular_image(img, timestamp, mask);
 
     frame_publisher_->update(tracker_);
-    if (tracker_->tracking_state_ == tracker_state_t::Tracking) {
-        map_publisher_->set_current_cam_pose(cam_pose_cw);
+    if (tracker_->tracking_state_ == tracker_state_t::Tracking && cam_pose_wc) {
+        map_publisher_->set_current_cam_pose(tracker_->curr_frm_.get_cam_pose());
+        map_publisher_->set_current_cam_pose_wc(*cam_pose_wc);
     }
 
-    return cam_pose_cw;
+    return cam_pose_wc;
 }
 
-Mat44_t system::feed_stereo_frame(const cv::Mat& left_img, const cv::Mat& right_img, const double timestamp, const cv::Mat& mask) {
+std::shared_ptr<Mat44_t> system::feed_stereo_frame(const cv::Mat& left_img, const cv::Mat& right_img, const double timestamp, const cv::Mat& mask) {
     assert(camera_->setup_type_ == camera::setup_type_t::Stereo);
 
     check_reset_request();
 
-    const Mat44_t cam_pose_cw = tracker_->track_stereo_image(left_img, right_img, timestamp, mask);
+    const auto cam_pose_wc = tracker_->track_stereo_image(left_img, right_img, timestamp, mask);
 
     frame_publisher_->update(tracker_);
-    if (tracker_->tracking_state_ == tracker_state_t::Tracking) {
-        map_publisher_->set_current_cam_pose(cam_pose_cw);
+    if (tracker_->tracking_state_ == tracker_state_t::Tracking && cam_pose_wc) {
+        map_publisher_->set_current_cam_pose(tracker_->curr_frm_.get_cam_pose());
+        map_publisher_->set_current_cam_pose_wc(*cam_pose_wc);
     }
 
-    return cam_pose_cw;
+    return cam_pose_wc;
 }
 
-Mat44_t system::feed_RGBD_frame(const cv::Mat& rgb_img, const cv::Mat& depthmap, const double timestamp, const cv::Mat& mask) {
+std::shared_ptr<Mat44_t> system::feed_RGBD_frame(const cv::Mat& rgb_img, const cv::Mat& depthmap, const double timestamp, const cv::Mat& mask) {
     assert(camera_->setup_type_ == camera::setup_type_t::RGBD);
 
     check_reset_request();
 
-    const Mat44_t cam_pose_cw = tracker_->track_RGBD_image(rgb_img, depthmap, timestamp, mask);
+    const auto cam_pose_wc = tracker_->track_RGBD_image(rgb_img, depthmap, timestamp, mask);
 
     frame_publisher_->update(tracker_);
-    if (tracker_->tracking_state_ == tracker_state_t::Tracking) {
-        map_publisher_->set_current_cam_pose(cam_pose_cw);
+    if (tracker_->tracking_state_ == tracker_state_t::Tracking && cam_pose_wc) {
+        map_publisher_->set_current_cam_pose(tracker_->curr_frm_.get_cam_pose());
+        map_publisher_->set_current_cam_pose_wc(*cam_pose_wc);
     }
 
-    return cam_pose_cw;
+    return cam_pose_wc;
+}
+
+bool system::update_pose(const Mat44_t& cam_pose_wc) {
+    const Mat44_t cam_pose_cw = cam_pose_wc.inverse();
+    bool status = tracker_->request_update_pose(cam_pose_cw);
+    if (status) {
+        // Even if state will be lost, still update the pose in map_publisher_
+        // to clearly show new camera position
+        map_publisher_->set_current_cam_pose(cam_pose_cw);
+        map_publisher_->set_current_cam_pose_wc(cam_pose_wc);
+    }
+    return status;
 }
 
 void system::pause_tracker() {

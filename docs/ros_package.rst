@@ -4,13 +4,6 @@
 ROS Package
 ===========
 
-We provide ROS package examples to help you run OpenVSLAM on ROS framework.
-
-.. NOTE ::
-
-    Please build OpenVSLAM with **OpenCV 3.3.1 or later** if you plan on using ROS package.
-    OpenCV 4.x is not supported yet.
-
 .. _section-installation:
 
 Installation
@@ -19,20 +12,20 @@ Installation
 Requirements
 ^^^^^^^^^^^^
 
-* `ROS <http://wiki.ros.org/>`_ : Please use the version ``kinetic`` or later.
+* `ROS <http://wiki.ros.org/>`_ : ``noetic`` is recommended. (If you have built OpenCV (3.3.1 or later) manually, you can use ``melodic`` or later.)
 
-* :ref:`OpenVSLAM <chapter-installation>` : Please build it with **OpenCV 3.x**.
+* :ref:`OpenVSLAM <chapter-installation>`
 
 * `image_transport <http://wiki.ros.org/image_transport>`_ : Required by this ROS package examples.
 
-* `cv_bridge <http://wiki.ros.org/cv_bridge>`_ : Please build it with the same version of OpenCV used in OpenVSLAM. (**We recommend building it from source.**)
+* `cv_bridge <http://wiki.ros.org/cv_bridge>`_ : Please build it with the same version of OpenCV used in OpenVSLAM.
 
 .. _section-prerequisites:
 
 Prerequisites
 ^^^^^^^^^^^^^
 
-Tested for **Ubuntu 16.04**.
+Tested for **Ubuntu 18.04**.
 
 Please install the following dependencies.
 
@@ -55,41 +48,23 @@ Download the source of ``cv_bridge``.
 
 .. code-block:: bash
 
-    cd /path/to/openvslam/ros
+    mkdir -p ~/catkin_ws/src
     git clone --branch ${ROS_DISTRO} --depth 1 https://github.com/ros-perception/vision_opencv.git
-    cp -r vision_opencv/cv_bridge src/
+    cp -r vision_opencv/cv_bridge ~/catkin_ws/src
     rm -rf vision_opencv
-
-.. NOTE ::
-
-    We recommend building ``cv_bridge`` from the source even if it has been installed via ``apt``.
 
 Build Instructions
 ^^^^^^^^^^^^^^^^^^
 
 When building with support for PangolinViewer, please specify the following cmake options: ``-DUSE_PANGOLIN_VIEWER=ON`` and ``-DUSE_SOCKET_PUBLISHER=OFF`` as described in :ref:`build of OpenVSLAM <section-build-unix>`.
+openvslam and openvslam_ros need to be built with the same options.
 
 .. code-block:: bash
 
-    cd /path/to/openvslam/ros
-    catkin_make \
-        -DBUILD_WITH_MARCH_NATIVE=ON \
-        -DUSE_PANGOLIN_VIEWER=ON \
-        -DUSE_SOCKET_PUBLISHER=OFF \
-        -DUSE_STACK_TRACE_LOGGER=ON \
-        -DBOW_FRAMEWORK=DBoW2
-
-Alternatively, when building with support for SocketViewer, please specify the following cmake options: ``-DUSE_PANGOLIN_VIEWER=OFF`` and ``-DUSE_SOCKET_PUBLISHER=ON`` as described in :ref:`build of OpenVSLAM <section-build-unix>`.
-
-.. code-block:: bash
-
-    cd /path/to/openvslam/ros
-    catkin_make \
-        -DBUILD_WITH_MARCH_NATIVE=ON \
-        -DUSE_PANGOLIN_VIEWER=OFF \
-        -DUSE_SOCKET_PUBLISHER=ON \
-        -DUSE_STACK_TRACE_LOGGER=ON \
-        -DBOW_FRAMEWORK=DBoW2
+    cd ~/catkin_ws/src
+    git clone --branch ros --depth 1 https://github.com/OpenVSLAM-Community/openvslam_ros.git
+    cd ~/catkin_ws
+    catkin_make -DUSE_PANGOLIN_VIEWER=ON -DUSE_SOCKET_PUBLISHER=OFF
 
 Examples
 ========
@@ -107,43 +82,7 @@ Run the core program required for ROS-based system in advance.
 Publisher
 ^^^^^^^^^
 
-Publishers continually broadcast images as a ROS topic.
-Please execute one of the following command snippets in the new terminal.
-
-Publish a Video File
---------------------
-
-For using video files (e.g. ``.mp4``) for visual SLAM or localization.
-
-.. code-block:: bash
-
-    source /path/to/openvslam/ros/devel/setup.bash
-    rosrun publisher video -m /path/to/video.mp4
-
-Republish the ROS topic to ``/camera/image_raw``.
-
-.. code-block:: bash
-
-    rosrun image_transport republish \
-        raw in:=/video/image_raw raw out:=/camera/image_raw
-
-
-Publish a Image Sequence
-------------------------
-
-For using image sequences for visual SLAM or localization.
-
-.. code-block:: bash
-
-    source /path/to/openvslam/ros/devel/setup.bash
-    rosrun publisher image -i /path/to/images/
-
-Republish the ROS topic to ``/camera/image_raw``.
-
-.. code-block:: bash
-
-    rosrun image_transport republish \
-        raw in:=/video/image_raw raw out:=/camera/image_raw
+If you want to input image sequences or videos into openvslam_ros, please use ROS2.
 
 Publish Images of a USB Camera
 ------------------------------
@@ -180,25 +119,25 @@ Tracking and Mapping
 --------------------
 
 We provide an example snippet for visual SLAM.
-The source code is placed at ``./openvslam/ros/src/openvslam/src/run_slam.cc``.
+The source code is placed at ``openvslam_ros/src/run_slam.cc``.
 
 .. code-block:: bash
 
-    source /path/to/openvslam/ros/devel/setup.bash
-    rosrun openvslam run_slam \
-        -v /path/to/orb_vocab.dbow2 \
+    source ~/catkin_ws/devel/setup.bash
+    rosrun openvslam_ros run_slam \
+        -v /path/to/orb_vocab.fbow \
         -c /path/to/config.yaml
 
 Localization
 ------------
 
 We provide an example snippet for localization based on a prebuilt map.
-The source code is placed at ``./ros/src/openvslam/src/run_localization.cc``.
+The source code is placed at ``openvslam_ros/src/run_localization.cc``.
 
 .. code-block:: bash
 
-    source /path/to/openvslam/ros/devel/setup.bash
-    rosrun openvslam run_localization \
-        -v /path/to/orb_vocab.dbow2 \
+    source ~/catkin_ws/devel/setup.bash
+    rosrun openvslam_ros run_localization \
+        -v /path/to/orb_vocab.fbow \
         -c /path/to/config.yaml \
         --map-db /path/to/map.msg

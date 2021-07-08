@@ -56,6 +56,9 @@ list(APPEND EXECUTABLE_TARGETS run_video_localization)
 add_executable(run_euroc_slam run_euroc_slam.cc util/euroc_util.cc)
 list(APPEND EXECUTABLE_TARGETS run_euroc_slam)
 
+add_executable(run_euroc_localization run_euroc_localization.cc util/euroc_util.cc)
+list(APPEND EXECUTABLE_TARGETS run_euroc_localization)
+
 add_executable(run_kitti_slam run_kitti_slam.cc util/kitti_util.cc)
 list(APPEND EXECUTABLE_TARGETS run_kitti_slam)
 
@@ -65,6 +68,7 @@ list(APPEND EXECUTABLE_TARGETS run_tum_rgbd_slam)
 foreach(EXECUTABLE_TARGET IN LISTS EXECUTABLE_TARGETS)
     # Set output directory for executables
     set_target_properties(${EXECUTABLE_TARGET} PROPERTIES
+                          RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
                           RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_BINARY_DIR}"
                           RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_BINARY_DIR}"
                           RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${PROJECT_BINARY_DIR}"
