@@ -34,7 +34,7 @@ class landmark;
 class map_database;
 class bow_database;
 
-class keyframe {
+class OPENVSLAM_API keyframe {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

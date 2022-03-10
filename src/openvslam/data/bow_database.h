@@ -2,6 +2,7 @@
 #define OPENVSLAM_DATA_BOW_DATABASE_H
 
 #include "openvslam/data/bow_vocabulary.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <mutex>
 #include <list>
@@ -16,7 +17,7 @@ namespace data {
 class frame;
 class keyframe;
 
-class bow_database {
+class OPENVSLAM_API bow_database {
 public:
     /**
      * Constructor

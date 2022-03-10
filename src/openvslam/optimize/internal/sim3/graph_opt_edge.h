@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZER_G2O_SIM3_GRAPH_OPT_EDGE_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/optimize/internal/sim3/shot_vertex.h"
 
 #include <g2o/core/base_binary_edge.h>
@@ -11,7 +12,7 @@ namespace optimize {
 namespace internal {
 namespace sim3 {
 
-class graph_opt_edge final : public g2o::BaseBinaryEdge<7, g2o::Sim3, shot_vertex, shot_vertex> {
+class OPENVSLAM_API graph_opt_edge final : public g2o::BaseBinaryEdge<7, g2o::Sim3, shot_vertex, shot_vertex> {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

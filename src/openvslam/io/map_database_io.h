@@ -1,6 +1,7 @@
 #ifndef OPENVSLAM_IO_MAP_DATABASE_IO_H
 #define OPENVSLAM_IO_MAP_DATABASE_IO_H
 
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/data/bow_vocabulary.h"
 
 #include <string>
@@ -15,7 +16,7 @@ class map_database;
 
 namespace io {
 
-class map_database_io {
+class OPENVSLAM_API map_database_io {
 public:
     /**
      * Constructor

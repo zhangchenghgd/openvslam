@@ -1,6 +1,7 @@
 #ifndef OPENVSLAM_OPTIMIZE_SIM3_OPTIMIZER_H
 #define OPENVSLAM_OPTIMIZE_SIM3_OPTIMIZER_H
 
+#include "openvslam/openvslam_exports.h"
 #include <g2o/types/sim3/types_seven_dof_expmap.h>
 
 #include <vector>
@@ -14,7 +15,7 @@ class landmark;
 
 namespace optimize {
 
-class transform_optimizer {
+class OPENVSLAM_API transform_optimizer {
 public:
     /**
      * Constructor

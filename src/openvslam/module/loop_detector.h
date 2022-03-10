@@ -3,6 +3,7 @@
 
 #include "openvslam/data/bow_vocabulary.h"
 #include "openvslam/module/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/optimize/transform_optimizer.h"
 
 #include <atomic>
@@ -16,7 +17,7 @@ class bow_database;
 
 namespace module {
 
-class loop_detector {
+class OPENVSLAM_API loop_detector {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

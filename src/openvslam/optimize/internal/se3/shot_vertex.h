@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZER_G2O_SE3_SHOT_VERTEX_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <g2o/core/base_vertex.h>
 #include <g2o/types/slam3d/se3quat.h>
@@ -11,7 +12,7 @@ namespace optimize {
 namespace internal {
 namespace se3 {
 
-class shot_vertex final : public g2o::BaseVertex<6, g2o::SE3Quat> {
+class OPENVSLAM_API shot_vertex final : public g2o::BaseVertex<6, g2o::SE3Quat> {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

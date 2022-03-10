@@ -17,7 +17,7 @@ class map_database;
 
 namespace module {
 
-class keyframe_inserter {
+class OPENVSLAM_API keyframe_inserter {
 public:
     keyframe_inserter(const camera::setup_type_t setup_type, const float true_depth_thr,
                       data::map_database* map_db, data::bow_database* bow_db,

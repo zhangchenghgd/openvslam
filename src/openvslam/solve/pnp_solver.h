@@ -10,7 +10,7 @@
 namespace openvslam {
 namespace solve {
 
-class pnp_solver {
+class OPENVSLAM_API pnp_solver {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -132,7 +132,7 @@ private:
     void estimate_R_and_t(const eigen_alloc_vector<Vec3_t>& pws, const eigen_alloc_vector<Vec3_t>& pcs, Mat33_t& rot, Vec3_t& trans);
 
     // A camera model to utilize bearing vector as a pixel coordinate
-    static constexpr float fx_ = 1.0, fy_ = 1.0, cx_ = 0.0, cy_ = 0.0;
+    // static constexpr float fx_ = 1.0, fy_ = 1.0, cx_ = 0.0, cy_ = 0.0;
 };
 
 } // namespace solve

@@ -36,7 +36,7 @@ enum class tracker_state_t {
     Lost
 };
 
-class tracking_module {
+class OPENVSLAM_API tracking_module {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

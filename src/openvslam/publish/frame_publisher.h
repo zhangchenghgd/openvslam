@@ -19,7 +19,7 @@ class map_database;
 
 namespace publish {
 
-class frame_publisher {
+class OPENVSLAM_API frame_publisher {
 public:
     /**
      * Constructor

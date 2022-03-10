@@ -11,7 +11,7 @@ class frame;
 
 namespace match {
 
-class stereo {
+class OPENVSLAM_API stereo {
 public:
     stereo() = delete;
 

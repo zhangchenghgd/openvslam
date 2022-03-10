@@ -20,7 +20,7 @@ namespace optimize {
 namespace internal {
 namespace se3 {
 
-class shot_vertex_container {
+class OPENVSLAM_API shot_vertex_container {
 public:
     //! Constructor
     explicit shot_vertex_container(const std::shared_ptr<unsigned int> offset, const unsigned int num_reserve = 50);

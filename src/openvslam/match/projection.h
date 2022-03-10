@@ -16,7 +16,7 @@ class landmark;
 
 namespace match {
 
-class projection final : public base {
+class OPENVSLAM_API projection final : public base {
 public:
     explicit projection(const float lowe_ratio = 0.6, const bool check_orientation = true)
         : base(lowe_ratio, check_orientation) {}

@@ -1,6 +1,7 @@
 #ifndef OPENVSLAM_OPTIMIZE_G2O_SIM3_MUTUAL_REPROJ_EDGE_WRAPPER_H
 #define OPENVSLAM_OPTIMIZE_G2O_SIM3_MUTUAL_REPROJ_EDGE_WRAPPER_H
 
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/camera/perspective.h"
 #include "openvslam/camera/fisheye.h"
 #include "openvslam/camera/equirectangular.h"
@@ -22,7 +23,7 @@ namespace internal {
 namespace sim3 {
 
 template<typename T>
-class mutual_reproj_edge_wapper {
+class OPENVSLAM_API mutual_reproj_edge_wapper {
 public:
     mutual_reproj_edge_wapper() = delete;
 

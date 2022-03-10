@@ -13,7 +13,7 @@ class landmark;
 
 namespace match {
 
-class fuse final : public base {
+class OPENVSLAM_API fuse final : public base {
 public:
     explicit fuse(const float lowe_ratio = 0.6)
         : base(lowe_ratio, true) {}

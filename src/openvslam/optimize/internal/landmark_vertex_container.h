@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZE_G2O_LANDMARK_VERTEX_CONTAINER_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/data/landmark.h"
 #include "openvslam/optimize/internal/landmark_vertex.h"
 
@@ -17,7 +18,7 @@ class landmark;
 namespace optimize {
 namespace internal {
 
-class landmark_vertex_container {
+class OPENVSLAM_API landmark_vertex_container {
 public:
     //! Constructor
     explicit landmark_vertex_container(const std::shared_ptr<unsigned int> offset, const unsigned int num_reserve = 200);

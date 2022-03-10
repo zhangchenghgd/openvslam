@@ -1,6 +1,7 @@
 #ifndef OPENVSLAM_IO_TRAJECTORY_IO_H
 #define OPENVSLAM_IO_TRAJECTORY_IO_H
 
+#include "openvslam/openvslam_exports.h"
 #include <string>
 
 namespace openvslam {
@@ -11,7 +12,7 @@ class map_database;
 
 namespace io {
 
-class trajectory_io {
+class OPENVSLAM_API trajectory_io {
 public:
     /**
      * Constructor

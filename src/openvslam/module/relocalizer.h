@@ -15,7 +15,7 @@ class bow_database;
 
 namespace module {
 
-class relocalizer {
+class OPENVSLAM_API relocalizer {
 public:
     //! Constructor
     explicit relocalizer(data::bow_database* bow_db,

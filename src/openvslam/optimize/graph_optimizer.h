@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZE_GRAPH_OPTIMIZER_H
 
 #include "openvslam/module/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <map>
 #include <set>
@@ -15,7 +16,7 @@ class map_database;
 
 namespace optimize {
 
-class graph_optimizer {
+class OPENVSLAM_API graph_optimizer {
 public:
     /**
      * Constructor

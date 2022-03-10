@@ -13,7 +13,7 @@ class landmark;
 
 namespace match {
 
-class bow_tree final : public base {
+class OPENVSLAM_API bow_tree final : public base {
 public:
     explicit bow_tree(const float lowe_ratio = 0.6, const bool check_orientation = true)
         : base(lowe_ratio, check_orientation) {}

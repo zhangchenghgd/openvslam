@@ -2,6 +2,7 @@
 #define OPENVSLAM_DATA_FRAME_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/camera/base.h"
 #include "openvslam/util/converter.h"
 #include "openvslam/data/bow_vocabulary.h"
@@ -35,7 +36,7 @@ namespace data {
 class keyframe;
 class landmark;
 
-class frame {
+class OPENVSLAM_API frame {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

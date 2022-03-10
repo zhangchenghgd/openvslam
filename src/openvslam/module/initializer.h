@@ -26,7 +26,7 @@ enum class initializer_state_t {
     Succeeded
 };
 
-class initializer {
+class OPENVSLAM_API initializer {
 public:
     initializer() = delete;
 

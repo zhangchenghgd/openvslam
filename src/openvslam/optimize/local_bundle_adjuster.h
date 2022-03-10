@@ -1,6 +1,8 @@
 #ifndef OPENVSLAM_OPTIMIZE_LOCAL_BUNDLE_ADJUSTER_H
 #define OPENVSLAM_OPTIMIZE_LOCAL_BUNDLE_ADJUSTER_H
 
+#include "openvslam/openvslam_exports.h"
+
 namespace openvslam {
 
 namespace data {
@@ -10,7 +12,7 @@ class map_database;
 
 namespace optimize {
 
-class local_bundle_adjuster {
+class OPENVSLAM_API local_bundle_adjuster {
 public:
     /**
      * Constructor

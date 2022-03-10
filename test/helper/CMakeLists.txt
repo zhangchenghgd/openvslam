@@ -1,5 +1,11 @@
+
+if(MSVC)
+    add_definitions(-DOPENVSLAM_TEST_HELPER_DLL_EXPORT)
+endif()
+
 # Create test helper library
 add_library(test_helper
+            helper_exports.h
             bearing_vector.h
             keypoint.h
             landmark.h

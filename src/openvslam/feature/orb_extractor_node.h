@@ -1,6 +1,7 @@
 #ifndef OPENVSLAM_FEATURE_ORB_EXTRACTOR_NODE_H
 #define OPENVSLAM_FEATURE_ORB_EXTRACTOR_NODE_H
 
+#include "openvslam/openvslam_exports.h"
 #include <array>
 #include <list>
 #include <array>
@@ -10,7 +11,7 @@
 namespace openvslam {
 namespace feature {
 
-class orb_extractor_node {
+class OPENVSLAM_API orb_extractor_node {
 public:
     //! Constructor
     orb_extractor_node() = default;

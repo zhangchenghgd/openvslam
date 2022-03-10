@@ -1,6 +1,7 @@
 #ifndef OPENVSLAM_DATA_CAMERA_DATABASE_H
 #define OPENVSLAM_DATA_CAMERA_DATABASE_H
 
+#include "openvslam/openvslam_exports.h"
 #include <mutex>
 #include <unordered_map>
 
@@ -14,7 +15,7 @@ class base;
 
 namespace data {
 
-class camera_database {
+class OPENVSLAM_API camera_database {
 public:
     explicit camera_database(camera::base* curr_camera);
 

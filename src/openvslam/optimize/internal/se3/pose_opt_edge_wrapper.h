@@ -21,7 +21,7 @@ namespace internal {
 namespace se3 {
 
 template<typename T>
-class pose_opt_edge_wrapper {
+class OPENVSLAM_API pose_opt_edge_wrapper {
 public:
     pose_opt_edge_wrapper() = delete;
 

@@ -2,6 +2,7 @@
 #define OPENVSLAM_DATA_COMMON_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/camera/base.h"
 
 #include <opencv2/core.hpp>
@@ -10,25 +11,25 @@
 namespace openvslam {
 namespace data {
 
-nlohmann::json convert_rotation_to_json(const Mat33_t& rot_cw);
+OPENVSLAM_API nlohmann::json convert_rotation_to_json(const Mat33_t& rot_cw);
 
-Mat33_t convert_json_to_rotation(const nlohmann::json& json_rot_cw);
+OPENVSLAM_API Mat33_t convert_json_to_rotation(const nlohmann::json& json_rot_cw);
 
-nlohmann::json convert_translation_to_json(const Vec3_t& trans_cw);
+OPENVSLAM_API nlohmann::json convert_translation_to_json(const Vec3_t& trans_cw);
 
-Vec3_t convert_json_to_translation(const nlohmann::json& json_trans_cw);
+OPENVSLAM_API Vec3_t convert_json_to_translation(const nlohmann::json& json_trans_cw);
 
-nlohmann::json convert_keypoints_to_json(const std::vector<cv::KeyPoint>& keypts);
+OPENVSLAM_API nlohmann::json convert_keypoints_to_json(const std::vector<cv::KeyPoint>& keypts);
 
-std::vector<cv::KeyPoint> convert_json_to_keypoints(const nlohmann::json& json_keypts);
+OPENVSLAM_API std::vector<cv::KeyPoint> convert_json_to_keypoints(const nlohmann::json& json_keypts);
 
-nlohmann::json convert_undistorted_to_json(const std::vector<cv::KeyPoint>& undist_keypts);
+OPENVSLAM_API nlohmann::json convert_undistorted_to_json(const std::vector<cv::KeyPoint>& undist_keypts);
 
-std::vector<cv::KeyPoint> convert_json_to_undistorted(const nlohmann::json& json_undist_keypts, const std::vector<cv::KeyPoint>& keypts = {});
+OPENVSLAM_API std::vector<cv::KeyPoint> convert_json_to_undistorted(const nlohmann::json& json_undist_keypts, const std::vector<cv::KeyPoint>& keypts = {});
 
-nlohmann::json convert_descriptors_to_json(const cv::Mat& descriptors);
+OPENVSLAM_API nlohmann::json convert_descriptors_to_json(const cv::Mat& descriptors);
 
-cv::Mat convert_json_to_descriptors(const nlohmann::json& json_descriptors);
+OPENVSLAM_API cv::Mat convert_json_to_descriptors(const nlohmann::json& json_descriptors);
 
 /**
  * Assign all keypoints to cells to accelerate projection matching
@@ -36,7 +37,7 @@ cv::Mat convert_json_to_descriptors(const nlohmann::json& json_descriptors);
  * @param undist_keypts
  * @param keypt_indices_in_cells
  */
-void assign_keypoints_to_grid(camera::base* camera, const std::vector<cv::KeyPoint>& undist_keypts,
+OPENVSLAM_API void assign_keypoints_to_grid(camera::base* camera, const std::vector<cv::KeyPoint>& undist_keypts,
                               std::vector<std::vector<std::vector<unsigned int>>>& keypt_indices_in_cells);
 
 /**
@@ -45,7 +46,7 @@ void assign_keypoints_to_grid(camera::base* camera, const std::vector<cv::KeyPoi
  * @param undist_keypts
  * @return
  */
-auto assign_keypoints_to_grid(camera::base* camera, const std::vector<cv::KeyPoint>& undist_keypts)
+OPENVSLAM_API auto assign_keypoints_to_grid(camera::base* camera, const std::vector<cv::KeyPoint>& undist_keypts)
     -> std::vector<std::vector<std::vector<unsigned int>>>;
 
 /**
@@ -75,7 +76,7 @@ inline bool get_cell_indices(camera::base* camera, const cv::KeyPoint& keypt, in
  * @param max_level
  * @return
  */
-std::vector<unsigned int> get_keypoints_in_cell(camera::base* camera, const std::vector<cv::KeyPoint>& undist_keypts,
+OPENVSLAM_API std::vector<unsigned int> get_keypoints_in_cell(camera::base* camera, const std::vector<cv::KeyPoint>& undist_keypts,
                                                 const std::vector<std::vector<std::vector<unsigned int>>>& keypt_indices_in_cells,
                                                 const float ref_x, const float ref_y, const float margin,
                                                 const int min_level = -1, const int max_level = -1);

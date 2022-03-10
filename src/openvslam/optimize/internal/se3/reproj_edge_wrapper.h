@@ -21,7 +21,7 @@ namespace internal {
 namespace se3 {
 
 template<typename T>
-class reproj_edge_wrapper {
+class OPENVSLAM_API reproj_edge_wrapper {
 public:
     reproj_edge_wrapper() = delete;
 

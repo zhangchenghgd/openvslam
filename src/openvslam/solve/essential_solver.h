@@ -2,6 +2,7 @@
 #define OPENVSLAM_SOLVE_ESSENTIAL_SOLVER_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <vector>
 #include <random>
@@ -11,7 +12,7 @@
 namespace openvslam {
 namespace solve {
 
-class essential_solver {
+class OPENVSLAM_API essential_solver {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

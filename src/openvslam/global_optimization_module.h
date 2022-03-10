@@ -2,6 +2,7 @@
 #define OPENVSLAM_GLOBAL_OPTIMIZATION_MODULE_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/data/bow_vocabulary.h"
 #include "openvslam/module/type.h"
 #include "openvslam/module/loop_detector.h"
@@ -24,7 +25,7 @@ class bow_database;
 class map_database;
 } // namespace data
 
-class global_optimization_module {
+class OPENVSLAM_API global_optimization_module {
 public:
     //! Constructor
     global_optimization_module(data::map_database* map_db, data::bow_database* bow_db, data::bow_vocabulary* bow_vocab, const YAML::Node& yaml_node, const bool fix_scale);

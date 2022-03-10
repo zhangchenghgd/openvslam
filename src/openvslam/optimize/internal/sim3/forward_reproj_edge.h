@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZE_G2O_FORWARD_REPROJ_EDGE_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/optimize/internal/sim3/transform_vertex.h"
 
 #include <g2o/core/base_unary_edge.h>
@@ -11,7 +12,7 @@ namespace optimize {
 namespace internal {
 namespace sim3 {
 
-class base_forward_reproj_edge : public g2o::BaseUnaryEdge<2, Vec2_t, transform_vertex> {
+class OPENVSLAM_API base_forward_reproj_edge : public g2o::BaseUnaryEdge<2, Vec2_t, transform_vertex> {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -75,7 +76,7 @@ inline void base_forward_reproj_edge::computeError() {
     _error = obs - cam_project(pos_1);
 }
 
-class perspective_forward_reproj_edge final : public base_forward_reproj_edge {
+class OPENVSLAM_API perspective_forward_reproj_edge final : public base_forward_reproj_edge {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -93,7 +94,7 @@ inline Vec2_t perspective_forward_reproj_edge::cam_project(const Vec3_t& pos_c) 
     return {fx_ * pos_c(0) / pos_c(2) + cx_, fy_ * pos_c(1) / pos_c(2) + cy_};
 }
 
-class equirectangular_forward_reproj_edge final : public base_forward_reproj_edge {
+class OPENVSLAM_API equirectangular_forward_reproj_edge final : public base_forward_reproj_edge {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

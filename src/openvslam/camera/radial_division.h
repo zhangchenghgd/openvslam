@@ -14,7 +14,7 @@ namespace camera {
 // The model is easy to implement and fast to evaluate.
 // It is well suited for wide angle lenses like used in action cameras
 // implemented by Steffen Urban, March 2020 (urbste@googlemail.com)
-class radial_division final : public base {
+class OPENVSLAM_API radial_division final : public base {
 public:
     radial_division(const std::string& name, const setup_type_t& setup_type, const color_order_t& color_order,
                     const unsigned int cols, const unsigned int rows, const double fps,

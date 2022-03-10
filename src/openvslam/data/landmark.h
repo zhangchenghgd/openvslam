@@ -2,6 +2,7 @@
 #define OPENVSLAM_DATA_LANDMARK_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <map>
 #include <mutex>
@@ -19,7 +20,7 @@ class keyframe;
 
 class map_database;
 
-class landmark {
+class OPENVSLAM_API landmark {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

@@ -2,6 +2,7 @@
 #define OPENVSLAM_DATA_FRAME_STATISTICS_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <vector>
 #include <unordered_map>
@@ -12,7 +13,7 @@ namespace data {
 class frame;
 class keyframe;
 
-class frame_statistics {
+class OPENVSLAM_API frame_statistics {
 public:
     /**
      * Constructor

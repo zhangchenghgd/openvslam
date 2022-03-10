@@ -8,6 +8,8 @@
 namespace openvslam {
 namespace solve {
 
+    static constexpr float fx_ = 1.0, fy_ = 1.0, cx_ = 0.0, cy_ = 0.0;
+
 pnp_solver::pnp_solver(const eigen_alloc_vector<Vec3_t>& valid_bearings, const std::vector<cv::KeyPoint>& valid_keypts,
                        const eigen_alloc_vector<Vec3_t>& valid_landmarks, const std::vector<float>& scale_factors,
                        const unsigned int min_num_inliers, bool use_fixed_seed)
@@ -554,7 +556,7 @@ Vec4_t pnp_solver::gauss_newton(const MatRC_t<6, 10>& L_6x10, const Vec6_t& Rho,
 
     MatRC_t<6, 4> A;
     Vec6_t B;
-    Vec4_t X;
+    //Vec4_t X;
 
     for (unsigned int j = 0; j < iterations_number; j++) {
         compute_A_and_b_for_gauss_newton(L_6x10, Rho, betas, A, B);

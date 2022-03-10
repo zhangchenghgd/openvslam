@@ -54,10 +54,16 @@ else()
     message(FATAL_ERROR "Invalid BoW framework: ${BOW_FRAMEWORK}")
 endif()
 
+# NOMINMAX
+if(MSVC)
+    add_definitions(-DNOMINMAX -DOPENVSLAM_DLL_EXPORT)
+endif()
+
 # ----- Create OpenVSLAM library -----
 
 add_library(${PROJECT_NAME}
             SHARED
+            ${CMAKE_CURRENT_SOURCE_DIR}/openvslam_exports.h
             ${CMAKE_CURRENT_SOURCE_DIR}/config.h
             ${CMAKE_CURRENT_SOURCE_DIR}/type.h
             ${CMAKE_CURRENT_SOURCE_DIR}/system.h

@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZER_G2O_SE3_PERSPECTIVE_POSE_OPT_EDGE_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/optimize/internal/landmark_vertex.h"
 #include "openvslam/optimize/internal/se3/shot_vertex.h"
 
@@ -13,7 +14,7 @@ namespace optimize {
 namespace internal {
 namespace se3 {
 
-class mono_perspective_pose_opt_edge final : public g2o::BaseUnaryEdge<2, Vec2_t, shot_vertex> {
+class OPENVSLAM_API mono_perspective_pose_opt_edge final : public g2o::BaseUnaryEdge<2, Vec2_t, shot_vertex> {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
@@ -105,7 +106,7 @@ inline Vec2_t mono_perspective_pose_opt_edge::cam_project(const Vec3_t& pos_c) c
     return {fx_ * pos_c(0) / pos_c(2) + cx_, fy_ * pos_c(1) / pos_c(2) + cy_};
 }
 
-class stereo_perspective_pose_opt_edge : public g2o::BaseUnaryEdge<3, Vec3_t, shot_vertex> {
+class OPENVSLAM_API stereo_perspective_pose_opt_edge : public g2o::BaseUnaryEdge<3, Vec3_t, shot_vertex> {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

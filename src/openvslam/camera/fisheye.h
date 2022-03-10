@@ -8,7 +8,7 @@
 namespace openvslam {
 namespace camera {
 
-class fisheye final : public base {
+class OPENVSLAM_API fisheye final : public base {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

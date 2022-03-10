@@ -11,7 +11,7 @@
 namespace openvslam {
 namespace solve {
 
-class sim3_solver {
+class OPENVSLAM_API sim3_solver {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

@@ -11,7 +11,7 @@
 namespace openvslam {
 namespace solve {
 
-class homography_solver {
+class OPENVSLAM_API homography_solver {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

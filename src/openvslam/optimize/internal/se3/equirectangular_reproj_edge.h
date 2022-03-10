@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZER_G2O_SE3_EQUIRECTANGULAR_REPROJ_EDGE_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/optimize/internal/landmark_vertex.h"
 #include "openvslam/optimize/internal/se3/shot_vertex.h"
 
@@ -12,7 +13,7 @@ namespace optimize {
 namespace internal {
 namespace se3 {
 
-class equirectangular_reproj_edge final : public g2o::BaseBinaryEdge<2, Vec2_t, landmark_vertex, shot_vertex> {
+class OPENVSLAM_API equirectangular_reproj_edge final : public g2o::BaseBinaryEdge<2, Vec2_t, landmark_vertex, shot_vertex> {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

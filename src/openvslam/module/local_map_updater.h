@@ -1,6 +1,7 @@
 #ifndef OPENVSLAM_MODULE_LOCAL_MAP_UPDATER_H
 #define OPENVSLAM_MODULE_LOCAL_MAP_UPDATER_H
 
+#include "openvslam/openvslam_exports.h"
 namespace openvslam {
 
 namespace data {
@@ -11,7 +12,7 @@ class landmark;
 
 namespace module {
 
-class local_map_updater {
+class OPENVSLAM_API local_map_updater {
 public:
     using keyframe_weights_t = std::unordered_map<data::keyframe*, unsigned int>;
 

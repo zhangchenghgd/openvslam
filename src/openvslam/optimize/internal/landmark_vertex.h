@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZER_G2O_LANDMARK_VERTEX_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <g2o/core/base_vertex.h>
 
@@ -9,7 +10,7 @@ namespace openvslam {
 namespace optimize {
 namespace internal {
 
-class landmark_vertex final : public g2o::BaseVertex<3, Vec3_t> {
+class OPENVSLAM_API landmark_vertex final : public g2o::BaseVertex<3, Vec3_t> {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

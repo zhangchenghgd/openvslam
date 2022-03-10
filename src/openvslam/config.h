@@ -8,7 +8,7 @@
 
 namespace openvslam {
 
-class config {
+class OPENVSLAM_API config {
 public:
     //! Constructor
     explicit config(const std::string& config_file_path);

@@ -1,6 +1,7 @@
 #ifndef OPENVSLAM_MAPPING_MODULE_H
 #define OPENVSLAM_MAPPING_MODULE_H
 
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/config.h"
 #include "openvslam/camera/base.h"
 #include "openvslam/module/local_map_cleaner.h"
@@ -27,7 +28,7 @@ class keyframe;
 class map_database;
 } // namespace data
 
-class mapping_module {
+class OPENVSLAM_API mapping_module {
 public:
     //! Constructor
     mapping_module(const YAML::Node& yaml_node, data::map_database* map_db);

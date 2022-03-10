@@ -2,6 +2,7 @@
 #define OPENVSLAM_SYSTEM_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 #include "openvslam/data/bow_vocabulary_fwd.h"
 
 #include <string>
@@ -34,7 +35,7 @@ class map_publisher;
 class frame_publisher;
 } // namespace publish
 
-class system {
+class OPENVSLAM_API system {
 public:
     //! Constructor
     system(const std::shared_ptr<config>& cfg, const std::string& vocab_file_path);

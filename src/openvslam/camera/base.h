@@ -2,6 +2,7 @@
 #define OPENVSLAM_CAMERA_BASE_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <string>
 #include <limits>
@@ -38,7 +39,7 @@ enum class color_order_t {
 
 const std::array<std::string, 3> color_order_to_string = {{"Gray", "RGB", "BGR"}};
 
-struct image_bounds {
+struct OPENVSLAM_API image_bounds {
     //! Default constructor
     image_bounds() = default;
 
@@ -53,7 +54,7 @@ struct image_bounds {
     float max_y_ = 0.0;
 };
 
-class base {
+class OPENVSLAM_API base {
 public:
     //! Constructor
     base(const std::string& name, const setup_type_t setup_type, const model_type_t model_type, const color_order_t color_order,
@@ -169,7 +170,7 @@ public:
     virtual nlohmann::json to_json() const = 0;
 };
 
-std::ostream& operator<<(std::ostream& os, const base& params);
+OPENVSLAM_API std::ostream& operator<<(std::ostream& os, const base& params);
 
 } // namespace camera
 } // namespace openvslam

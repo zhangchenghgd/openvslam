@@ -2,6 +2,7 @@
 #define OPENVSLAM_OPTIMIZER_G2O_SIM3_SHOT_VERTEX_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <g2o/core/base_vertex.h>
 #include <g2o/types/sim3/sim3.h>
@@ -11,7 +12,7 @@ namespace optimize {
 namespace internal {
 namespace sim3 {
 
-class shot_vertex final : public g2o::BaseVertex<7, g2o::Sim3> {
+class OPENVSLAM_API shot_vertex final : public g2o::BaseVertex<7, g2o::Sim3> {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

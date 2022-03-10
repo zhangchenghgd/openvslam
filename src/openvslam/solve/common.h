@@ -2,6 +2,7 @@
 #define OPENVSLAM_SOLVE_UTIL_H
 
 #include "openvslam/type.h"
+#include "openvslam/openvslam_exports.h"
 
 #include <vector>
 
@@ -10,7 +11,7 @@
 namespace openvslam {
 namespace solve {
 
-void normalize(const std::vector<cv::KeyPoint>& keypts, std::vector<cv::Point2f>& normalized_pts, Mat33_t& transform);
+OPENVSLAM_API void normalize(const std::vector<cv::KeyPoint>& keypts, std::vector<cv::Point2f>& normalized_pts, Mat33_t& transform);
 
 } // namespace solve
 } // namespace openvslam

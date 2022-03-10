@@ -14,7 +14,7 @@ class frame;
 
 namespace initialize {
 
-class bearing_vector final : public base {
+class OPENVSLAM_API bearing_vector final : public base {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
