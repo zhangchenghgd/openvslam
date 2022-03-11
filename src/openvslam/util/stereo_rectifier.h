@@ -9,7 +9,7 @@
 namespace openvslam {
 namespace util {
 
-class stereo_rectifier {
+class OPENVSLAM_API stereo_rectifier {
 public:
     //! Constructor
     explicit stereo_rectifier(const std::shared_ptr<config>& cfg);

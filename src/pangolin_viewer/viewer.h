@@ -25,7 +25,7 @@ class map_publisher;
 
 namespace pangolin_viewer {
 
-class viewer {
+class PANGOLIN_VIRWER_API viewer {
 public:
     /**
      * Constructor

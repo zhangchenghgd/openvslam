@@ -4,10 +4,11 @@
 #include <array>
 #include <string>
 #include <cctype>
+#include "pangolin_viewer_exports.h"
 
 namespace pangolin_viewer {
 
-class color_scheme {
+class PANGOLIN_VIRWER_API color_scheme {
 public:
     explicit color_scheme(const std::string& color_set_str);
 

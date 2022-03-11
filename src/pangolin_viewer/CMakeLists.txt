@@ -5,7 +5,12 @@ find_package(Pangolin REQUIRED)
 
 # ----- Configure PangolinViewer library -----
 
+if(MSVC)
+    add_definitions(-DPANGOLIN_VIRWER_DLL_EXPORT)
+endif()
+
 add_library(pangolin_viewer
+            ${CMAKE_CURRENT_SOURCE_DIR}/pangolin_viewer_exports.h
             ${CMAKE_CURRENT_SOURCE_DIR}/viewer.h
             ${CMAKE_CURRENT_SOURCE_DIR}/color_scheme.h
             ${CMAKE_CURRENT_SOURCE_DIR}/viewer.cc
