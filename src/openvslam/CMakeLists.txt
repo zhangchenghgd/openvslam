@@ -25,7 +25,7 @@ if(TARGET g2o::csparse)
     set(${CXSPARSE_LIBRARIES} g2o::csparse)
 else()
     # CXSparse for g2o
-    find_package(CXSparse)
+    find_package(CXSparse CONFIG)
     if(CXSPARSE_FOUND)
         include_directories(${CXSPARSE_INCLUDE_DIRS})
     endif()
@@ -46,10 +46,10 @@ set_property(CACHE BOW_FRAMEWORK PROPERTY STRINGS "DBoW2" "FBoW")
 if(BOW_FRAMEWORK MATCHES "DBoW2")
     find_package(DBoW2 REQUIRED)
 elseif(BOW_FRAMEWORK MATCHES "FBoW")
-    find_package(fbow QUIET)
-    if(NOT fbow_FOUND)
+    #find_package(fbow QUIET)
+    #if(NOT fbow_FOUND)
         add_subdirectory(${PROJECT_SOURCE_DIR}/3rd/FBoW ${PROJECT_BINARY_DIR}/3rd/FBoW)
-    endif()
+    #endif()
 else()
     message(FATAL_ERROR "Invalid BoW framework: ${BOW_FRAMEWORK}")
 endif()
@@ -57,6 +57,7 @@ endif()
 # NOMINMAX
 if(MSVC)
     add_definitions(-DNOMINMAX -DOPENVSLAM_DLL_EXPORT)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
 endif()
 
 # ----- Create OpenVSLAM library -----
@@ -79,14 +80,15 @@ add_library(${PROJECT_NAME}
 # Set output directory of the library
 set_target_properties(${PROJECT_NAME} PROPERTIES
                       OUTPUT_NAME openvslam
-                      ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
-                      LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+                      RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/bin
+                      ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/lib
+                      LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/lib)
 
 # ----- Compile configuration -----
 
 # OpenMP
 target_compile_options(${PROJECT_NAME} PRIVATE ${OpenMP_CXX_FLAGS})
-set(USE_OPENMP OFF CACHE BOOL "Use OpenMP")
+set(USE_OPENMP ON CACHE BOOL "Use OpenMP")
 if(USE_OPENMP)
     target_compile_definitions(${PROJECT_NAME} PUBLIC USE_OPENMP)
     message(STATUS "OpenMP: ENABLED")

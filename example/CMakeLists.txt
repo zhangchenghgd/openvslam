@@ -67,13 +67,21 @@ list(APPEND EXECUTABLE_TARGETS run_tum_rgbd_slam)
 
 foreach(EXECUTABLE_TARGET IN LISTS EXECUTABLE_TARGETS)
     # Set output directory for executables
+    # set_target_properties(${EXECUTABLE_TARGET} PROPERTIES
+    #                       RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
+    #                       RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_BINARY_DIR}"
+    #                       RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_BINARY_DIR}"
+    #                       RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${PROJECT_BINARY_DIR}"
+    #                       RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${PROJECT_BINARY_DIR}")
+    
     set_target_properties(${EXECUTABLE_TARGET} PROPERTIES
-                          RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
-                          RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_BINARY_DIR}"
-                          RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_BINARY_DIR}"
-                          RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${PROJECT_BINARY_DIR}"
-                          RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${PROJECT_BINARY_DIR}")
-
+                          RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/output/bin/Debug
+                          RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/output/bin/Release
+                          RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${PROJECT_BINARY_DIR}/output/bin/MinSizeRel
+                          RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_BINARY_DIR}/output/RelWithDebInfo)
+						  
+	set_target_properties(${EXECUTABLE_TARGET} PROPERTIES FOLDER "Examples")
+	
     # PangolinViewer is used on a priority basis
     if(USE_PANGOLIN_VIEWER)
         # Set macro flag
@@ -112,3 +120,9 @@ foreach(EXECUTABLE_TARGET IN LISTS EXECUTABLE_TARGETS)
                                $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rd/popl/include>
                                $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rd/spdlog/include>)
 endforeach()
+
+
+if(MSVC)
+  set_target_properties(run_video_slam PROPERTIES 
+  VS_DEBUGGER_COMMAND_ARGUMENTS  "-v ${CMAKE_CURRENT_SOURCE_DIR}/aist/orb_vocab.fbow -m ${CMAKE_CURRENT_SOURCE_DIR}/aist/video.mp4 -c ${CMAKE_CURRENT_SOURCE_DIR}/aist/equirectangular.yaml")
+endif()

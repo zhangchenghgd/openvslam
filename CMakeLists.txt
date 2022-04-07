@@ -27,6 +27,9 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 option(BUILD_SHARED_LIBS "Build OpenVSLAM as a shared library" ON)
 
 # ----- Set options for debugging -----
+if(WIN32)
+    set(CMAKE_DEBUG_POSTFIX "d")
+endif()
 
 set(USE_CCACHE ON CACHE BOOL "Use ccache to accelerate build")
 find_program(CCACHE_EXE ccache)
@@ -106,6 +109,9 @@ if(NOT OpenCV_FOUND)
 endif()
 message(STATUS "Use OpenCV ${OpenCV_VERSION}")
 
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_property(GLOBAL PROPERTY AUTOGEN_TARGETS_FOLDER AutoGen)
+
 # ----- Install configuration -----
 
 include(CMakePackageConfigHelpers)
@@ -115,7 +121,7 @@ set(OPENVSLAM_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated)
 set(OPENVSLAM_VERSION_CONFIG ${OPENVSLAM_GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake)
 set(OPENVSLAM_PROJECT_CONFIG ${OPENVSLAM_GENERATED_DIR}/${PROJECT_NAME}Config.cmake)
 set(OPENVSLAM_TARGETS_EXPORT_NAME ${PROJECT_NAME}Targets)
-set(OPENVSLAM_CONFIG_INSTALL_DIR lib/cmake/${PROJECT_NAME})
+set(OPENVSLAM_CONFIG_INSTALL_DIR share/cmake/${PROJECT_NAME})
 set(OPENVSLAM_NAMESPACE "${PROJECT_NAME}::")
 set(OPENVSLAM_VERSION 0.2.3)
 
@@ -126,6 +132,16 @@ write_basic_package_version_file(${OPENVSLAM_VERSION_CONFIG}
 # Create a project config file
 configure_file(${PROJECT_SOURCE_DIR}/cmake/Config.cmake.in ${OPENVSLAM_PROJECT_CONFIG} @ONLY)
 
+if(WIN32)
+  set(RUNTIME_OUTPUT_PATH "${PROJECT_BINARY_DIR}/output/bin" CACHE PATH "Directory for dlls and binaries")
+  set(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/output/bin" CACHE PATH "Directory for binaries")
+  set(LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/output/bin" CACHE PATH "Directory for DLLs")
+else()
+  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_INSTALL_PREFIX}/lib/cmake/" "/usr/lib/cmake" "/usr/local/lib/cmake")
+endif()
+
+message(STATUS " -- CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
+
 # Install to the specified directory
 install(FILES ${OPENVSLAM_VERSION_CONFIG} ${OPENVSLAM_PROJECT_CONFIG}
         DESTINATION ${OPENVSLAM_CONFIG_INSTALL_DIR})
@@ -133,15 +149,18 @@ install(EXPORT ${OPENVSLAM_TARGETS_EXPORT_NAME}
         NAMESPACE ${OPENVSLAM_NAMESPACE}
         DESTINATION ${OPENVSLAM_CONFIG_INSTALL_DIR})
 
+
 # Set standard installation directories
 set(RUNTIME_DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
 set(LIBRARY_DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 set(ARCHIVE_DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 set(INCLUDES_DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 
+
+
 # ----- Build selection -----
 
-set(USE_PANGOLIN_VIEWER OFF CACHE BOOL "Enable Pangolin Viewer")
+set(USE_PANGOLIN_VIEWER ON CACHE BOOL "Enable Pangolin Viewer")
 set(USE_SOCKET_PUBLISHER OFF CACHE BOOL "Enable Socket Publisher")
 
 add_subdirectory(src)
@@ -156,3 +175,6 @@ if(BUILD_TESTS)
     enable_testing()
     add_subdirectory(test)
 endif()
+
+
+

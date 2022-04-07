@@ -2,13 +2,16 @@ set(INSTALL_GTEST OFF CACHE BOOL "Install google-test" FORCE)
 
 # ----- Download google-test -----
 
-include(${PROJECT_SOURCE_DIR}/cmake/DownloadProject.cmake)
-download_project(PROJ googletest
-                 URL https://github.com/google/googletest/archive/release-1.10.0.tar.gz
-                 URL_HASH SHA1=9c89be7df9c5e8cb0bc20b3c4b39bf7e82686770
-                 DOWNLOAD_NO_PROGRESS YES)
-add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
+# include(${PROJECT_SOURCE_DIR}/cmake/DownloadProject.cmake)
+# download_project(PROJ googletest
+#                  URL https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+#                  URL_HASH SHA1=9c89be7df9c5e8cb0bc20b3c4b39bf7e82686770
+#                  DOWNLOAD_NO_PROGRESS YES)
+# add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
 
+find_package(GTest CONFIG REQUIRED)
+#    target_link_libraries(main PRIVATE GTest::gmock GTest::gtest GTest::gmock_main GTest::gtest_main)
+	
 # ----- Glob test codes----- 
 
 file(GLOB_RECURSE OPENVSLAM_SOURCE_PATHS "./openvslam/*.cc")
@@ -32,22 +35,31 @@ foreach(SOURCE_PATH ${SOURCE_PATHS})
     target_include_directories(${TEST_EXECUTABLE_NAME} SYSTEM
                                PRIVATE
                                ${PROJECT_SOURCE_DIR}/src
-                               ${googletest_SOURCE_DIR}/googletest/include)
+                               # ${googletest_SOURCE_DIR}/googletest/include
+							   )
     target_link_libraries(${TEST_EXECUTABLE_NAME}
                           PRIVATE
                           ${PROJECT_NAME}
                           test_helper
-                          gtest_main
+                          # gtest_main
+                          GTest::gtest_main
                           opencv_imgcodecs
                           opencv_highgui)
     set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES
-                          RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/test
-                          RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/test
-                          RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${PROJECT_BINARY_DIR}/test
-                          RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_BINARY_DIR}/test)
-
+                          RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/output/bin/Debug
+                          RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/output/bin/Release
+                          RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${PROJECT_BINARY_DIR}/output/bin/MinSizeRel
+                          RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_BINARY_DIR}/output/RelWithDebInfo)
+	
+	
+	set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES FOLDER "Tests")
+	
     # Add test
-    add_test(${TEST_MODULE_NAME} ${PROJECT_BINARY_DIR}/test/${TEST_EXECUTABLE_NAME})
+    # add_test(${TEST_MODULE_NAME} ${PROJECT_BINARY_DIR}/test/${TEST_EXECUTABLE_NAME})
+    
+    add_test(NAME ${TEST_MODULE_NAME} 
+       COMMAND "$<TARGET_FILE:${TEST_EXECUTABLE_NAME}>")
+    
 endforeach()
 
 # Add test helper library

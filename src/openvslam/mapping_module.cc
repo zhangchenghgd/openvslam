@@ -282,7 +282,7 @@ void mapping_module::triangulate_with_two_keyframes(data::keyframe* keyfrm_1, da
 #ifdef USE_OPENMP
 #pragma omp parallel for
 #endif
-    for (unsigned int i = 0; i < matches.size(); ++i) {
+    for ( int i = 0; i < matches.size(); ++i) {
         const auto idx_1 = matches.at(i).first;
         const auto idx_2 = matches.at(i).second;
 
