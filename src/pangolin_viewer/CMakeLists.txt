@@ -18,8 +18,8 @@ add_library(pangolin_viewer
 
 set_target_properties(pangolin_viewer PROPERTIES
                       OUTPUT_NAME pangolin_viewer
-                      ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
-                      LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+                      ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/lib
+                      LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/lib)
 
 target_include_directories(pangolin_viewer 
                            PUBLIC
