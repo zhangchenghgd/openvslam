@@ -24,3 +24,8 @@ target_link_libraries(test_helper
                       PUBLIC
                       Eigen3::Eigen
                       opencv_core)
+
+set_target_properties(test_helper PROPERTIES
+                      RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/bin
+                      ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/lib
+                      LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/lib)

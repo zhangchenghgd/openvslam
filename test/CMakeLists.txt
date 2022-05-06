@@ -45,12 +45,18 @@ foreach(SOURCE_PATH ${SOURCE_PATHS})
                           GTest::gtest_main
                           opencv_imgcodecs
                           opencv_highgui)
+    # set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES
+    #                       RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/output/bin/Debug
+    #                       RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/output/bin/Release
+    #                       RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${PROJECT_BINARY_DIR}/output/bin/MinSizeRel
+    #                       RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_BINARY_DIR}/output/bin/RelWithDebInfo)
+
     set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES
-                          RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/output/bin/Debug
-                          RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/output/bin/Release
-                          RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${PROJECT_BINARY_DIR}/output/bin/MinSizeRel
-                          RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_BINARY_DIR}/output/RelWithDebInfo)
-	
+                      RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/bin
+                      ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/lib
+                      LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output/lib)
+
+                      
 	
 	set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES FOLDER "Tests")
 	

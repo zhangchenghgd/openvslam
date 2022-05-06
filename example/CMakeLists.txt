@@ -78,7 +78,7 @@ foreach(EXECUTABLE_TARGET IN LISTS EXECUTABLE_TARGETS)
                           RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/output/bin/Debug
                           RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/output/bin/Release
                           RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${PROJECT_BINARY_DIR}/output/bin/MinSizeRel
-                          RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_BINARY_DIR}/output/RelWithDebInfo)
+                          RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${PROJECT_BINARY_DIR}/output/bin/RelWithDebInfo)
 						  
 	set_target_properties(${EXECUTABLE_TARGET} PROPERTIES FOLDER "Examples")
 	
